@@ -20,9 +20,9 @@ Restart SublimeText 2 and open some *.py file to see check results. You can see 
 ## Why not sublimelint
 
 Before creating this project I used [sublimelint](https://github.com/lunixbochs/sublimelint), which is multilanguage
-checker/linter.
+checker/linter. I described pros and cons of both below.
 
-### Sublimelint
+### sublimelint
 - can't use your Python version or your virtualenv
 - don't check with pep8
 - do checks on every edit
