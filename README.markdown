@@ -6,16 +6,16 @@ and [PyFlakes](http://pypi.python.org/pypi/pyflakes).
 
 ## Installation
 
-1. Go to your Packages dir (Sublime Text 2 -> Preferences -> Browse Packages). Clone this repository into Packages subdirectory:
+1 Go to your Packages dir (Sublime Text 2 -> Preferences -> Browse Packages). Clone this repository into Packages subdirectory:
 
     git clone git://github.com/vorushin/sublimetext_python_checker.git
 
-2. Go to sublimetext_python_checker/python_checker.py and set your preferred checkers by editing CHECKERS variable.
+2 Go to sublimetext_python_checker/python_checker.py and set your preferred checkers by editing CHECKERS variable.
 
     CHECKERS = ['/Users/vorushin/.virtualenvs/answers/bin/pep8',
                 '/Users/vorushin/.virtualenvs/answers/bin/pyflakes']
 
-3. Restart SublimeText 2 and open some *.py file to see check results. You can see additional information in python console of your editor (go View -> Show Console).
+3 Restart SublimeText 2 and open some *.py file to see check results. You can see additional information in python console of your editor (go View -> Show Console).
 
 ## Why not sublimelint
 
