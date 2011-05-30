@@ -7,6 +7,7 @@ import sublime_plugin
 CHECKERS = ['/Users/vorushin/.virtualenvs/answers/bin/pep8',
             '/Users/vorushin/.virtualenvs/answers/bin/pyflakes']
 
+
 global view_messages
 view_messages = {}
 
@@ -22,7 +23,6 @@ class PythonCheckerCommand(sublime_plugin.EventListener):
         global view_messages
         lineno = view.rowcol(view.sel()[0].end())[0]
         if view.id() in view_messages and lineno in view_messages[view.id()]:
-            print view_messages[view.id()][lineno]
             view.set_status('python_checker', view_messages[view.id()][lineno])
         else:
             view.erase_status('python_checker')
@@ -65,12 +65,11 @@ def check_and_mark(view):
         sublime.DRAW_EMPTY_AS_OVERWRITE | sublime.DRAW_OUTLINED)
 
     line_messages = {}
-    for m in messages:
-        if m['text']:
-            if m['lineno'] in line_messages:
-                line_messages[m['lineno']] += ';' + m['text']
-            else:
-                line_messages[m['lineno']] = m['text']
+    for m in (m for m in messages if m['text']):
+        if m['lineno'] in line_messages:
+            line_messages[m['lineno']] += ';' + m['text']
+        else:
+            line_messages[m['lineno']] = m['text']
 
     global view_messages
     view_messages[view.id()] = line_messages
@@ -114,4 +113,3 @@ def invalid_syntax_col(checker_output, line_index):
     for line in checker_output.splitlines()[line_index + 1:]:
         if line.startswith(' ') and line.find('^') != -1:
             return line.find('^')
-    return None
