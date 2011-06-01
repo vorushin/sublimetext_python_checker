@@ -33,4 +33,4 @@ checker/linter. I described pros and cons of both below.
 - do checks only on opening and saving files
 - checks only Python files
 - checks with pep8 and pyflakes
-- all this in no more than 100 LOC
+- all this in a few screens of code

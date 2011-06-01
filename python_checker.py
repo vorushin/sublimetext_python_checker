@@ -1,3 +1,4 @@
+import re
 from subprocess import Popen, PIPE
 
 import sublime
@@ -76,28 +77,43 @@ def check_and_mark(view):
 
 
 def parse_messages(checker_output):
+    '''
+    Examples of lines in checker_output
+
+    pep8 on *nix
+    /Users/vorushin/Python/answers/urls.py:24:80: E501 line too long \
+    (96 characters)
+
+    pyflakes on *nix
+    /Users/vorushin/Python/answers/urls.py:4: 'from django.conf.urls.defaults \
+    import *' used; unable to detect undefined names
+
+    pyflakes, invalid syntax message (3 lines)
+    /Users/vorushin/Python/answers/urls.py:14: invalid syntax
+    dict_test = {key: value for (key, value) in [('one', 1), ('two': 2)]}
+                                                                    ^
+
+    pyflakes on Windows
+    c:\Python26\Scripts\pildriver.py:208: 'ImageFilter' imported but unused
+    '''
+
+    pep8_re = re.compile(r'.*:(\d+):(\d+):\s+(.*)')
+    pyflakes_re = re.compile(r'.*:(\d+):\s+(.*)')
+
     messages = []
     for i, line in enumerate(checker_output.splitlines()):
-        first_colon = line.find(':')
-        if first_colon == -1:
-            continue
-        second_colon = line.find(':', first_colon + 1)
-        third_colon = line.find(':', second_colon + 1)
-        try:
-            lineno = int(line[first_colon + 1:second_colon]) - 1
-            if third_colon != -1:
-                col = int(line[second_colon + 1:third_colon]) - 1
-                text = line[third_colon + 1:]
-            else:
-                col = None
-                text = line[second_colon + 1:]
-            text = text.strip()
+        if pep8_re.match(line):
+            lineno, col, text = pep8_re.match(line).groups()
+        elif pyflakes_re.match(line):
+            lineno, text = pyflakes_re.match(line).groups()
+            col = 1
             if text == 'invalid syntax':
                 col = invalid_syntax_col(checker_output, i)
-        except ValueError:
+        else:
             continue
-
-        messages.append({'lineno': lineno, 'col': col, 'text': text})
+        messages.append({'lineno': int(lineno) - 1,
+                         'col': int(col) - 1,
+                         'text': text})
 
     return messages
 
