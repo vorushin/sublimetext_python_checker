@@ -5,8 +5,8 @@ import sublime
 import sublime_plugin
 
 
-CHECKERS = ['/Users/vorushin/.virtualenvs/answers/bin/pep8',
-            '/Users/vorushin/.virtualenvs/answers/bin/pyflakes']
+CHECKERS = ['/Users/vorushin/.virtualenvs/checkers/bin/pep8',
+            '/Users/vorushin/.virtualenvs/checkers/bin/pyflakes']
 
 
 global view_messages
