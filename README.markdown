@@ -27,10 +27,12 @@ checker/linter. I described pros and cons of both below.
 - don't check with pep8
 - do checks on every edit
 - do checks for Python (derivative of pyflakes), PHP, Perl, Ruby
+- works on Windows/Linux/MacOSX
 
 ### sublimetext_python_checker
 - can use your version of Python and your virtualenv
 - do checks only on opening and saving files
+- works only on Linux and Mac OS X
 - checks only Python files
 - checks with pep8 and pyflakes
 - all this in a few screens of code
