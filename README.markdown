@@ -10,10 +10,12 @@ Go to your Packages dir (Sublime Text 2 -> Preferences -> Browse Packages). Clon
 
     git clone git://github.com/vorushin/sublimetext_python_checker.git
 
-Go to sublimetext_python_checker/python_checker.py and set your preferred checkers by editing CHECKERS variable.
+Go to sublimetext_python_checker/ and create file local_settings.py with list of your preferred checkers:
 
-    CHECKERS = ['/Users/vorushin/.virtualenvs/answers/bin/pep8',
-                '/Users/vorushin/.virtualenvs/answers/bin/pyflakes']
+    CHECKERS = [('/Users/vorushin/.virtualenvs/checkers/bin/pep8', []),
+                ('/Users/vorushin/.virtualenvs/checkers/bin/pyflakes', [])]
+
+First parameter is path to command, second - optional list of arguments. If you want to disable line length checking in pep8, set second parameter to ['--ignore=E501'].
 
 Restart SublimeText 2 and open some *.py file to see check results. You can see additional information in python console of your editor (go View -> Show Console).
 

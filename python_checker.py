@@ -4,9 +4,23 @@ from subprocess import Popen, PIPE
 import sublime
 import sublime_plugin
 
+try:
+    from local_settings import CHECKERS
+except ImportError as e:
+    print '''
+Please create file local_settings.py in the same directory with
+python_checker.py. Add to local_settings.py list of your checkers.
 
-CHECKERS = ['/Users/vorushin/.virtualenvs/checkers/bin/pep8',
-            '/Users/vorushin/.virtualenvs/checkers/bin/pyflakes']
+Example:
+
+CHECKERS = [('/Users/vorushin/.virtualenvs/checkers/bin/pep8', []),
+            ('/Users/vorushin/.virtualenvs/checkers/bin/pyflakes', [])]
+
+First parameter is path to command, second - optional list of arguments.
+If you want to disable line length checking in pep8, set second parameter
+to ['--ignore=E501'].
+'''
+    raise e
 
 
 global view_messages
@@ -35,8 +49,8 @@ def check_and_mark(view):
 
     messages = []
 
-    for checker in CHECKERS:
-        p = Popen([checker, view.file_name()], stdout=PIPE, stderr=PIPE)
+    for checker, args in CHECKERS:
+        p = Popen([checker, view.file_name()] + args, stdout=PIPE, stderr=PIPE)
         stdout, stderr = p.communicate(None)
         if stdout:
             print stdout
