@@ -1,4 +1,5 @@
 import re
+import signal
 from subprocess import Popen, PIPE
 
 import sublime
@@ -28,8 +29,12 @@ view_messages = {}
 
 
 class PythonCheckerCommand(sublime_plugin.EventListener):
-    def on_load(self, view):
-        check_and_mark(view)
+    def on_activated(self, view):
+        signal.signal(signal.SIGALRM, lambda s, f: check_and_mark(view))
+        signal.alarm(1)
+
+    def on_deactivated(self, view):
+        signal.alarm(0)
 
     def on_post_save(self, view):
         check_and_mark(view)
