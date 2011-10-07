@@ -53,16 +53,21 @@ def check_and_mark(view):
         return
 
     messages = []
-
     for checker, args in CHECKERS:
-        p = Popen([checker, view.file_name()] + args, stdout=PIPE, stderr=PIPE)
-        stdout, stderr = p.communicate(None)
-        if stdout:
-            print stdout
-        if stderr:
-            print stderr
-        messages += parse_messages(stdout)
-        messages += parse_messages(stderr)
+        tmp = []
+        try:
+            p = Popen([checker, view.file_name()] + args, stdout=PIPE,
+                stderr=PIPE)
+            stdout, stderr = p.communicate(None)
+            tmp += parse_messages(stdout)
+            tmp += parse_messages(stderr)
+            messages += tmp
+            for line in tmp:
+                print "[%s] %s:%s:%s %s" % (checker.split('/')[-1],
+                    view.file_name(), line['lineno'],
+                    line['col'], line['text'])
+        except OSError:
+            print "Checker could not be found:", checker
 
     outlines = [view.full_line(view.text_point(m['lineno'], 0)) \
                 for m in messages]
