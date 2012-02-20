@@ -51,6 +51,8 @@ class PythonCheckerCommand(sublime_plugin.EventListener):
 def check_and_mark(view):
     if not 'python' in view.settings().get('syntax').lower():
         return
+    if not view.file_name():  # we check files (not buffers)
+        return
 
     messages = []
     for checker, args in CHECKERS:
