@@ -1,0 +1,25 @@
+{
+    "schema_version": "1.2",
+    "packages": [
+        {
+            "name": "python_syntax_checker",
+            "description": "Check python syntax using pep8 and pyFlakes",
+            "author": "zehome",
+            "homepage": "https://github.com/vorushin/sublimetext_python_checker",
+            "platforms": {
+                "osx": [
+                    {
+                        "version": "1.0",
+                        "url": "https://nodeload.github.com/vorushin/sublimetext_python_checker/zipball/v1.0"
+                    }
+                ],
+                "linux": [
+                    {
+                        "version": "1.0",
+                        "url": "https://nodeload.github.com/vorushin/sublimetext_python_checker/zipball/v1.0"
+                    }
+                ]
+            }
+       }
+    ]
+}
