@@ -73,8 +73,6 @@ def check_and_mark(view):
     checkers.extend([checker for checker in CHECKERS
         if os.path.basename(checker[0]) not in checkers_basenames])
 
-    print checkers
-
     messages = []
     for checker, args in checkers:
         checker_messages = []
