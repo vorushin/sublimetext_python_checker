@@ -69,9 +69,11 @@ def check_and_mark(view):
     checkers = view.settings().get('python_syntax_checkers', [])
 
     # Append "local_settings.CHECKERS" to checkers from settings
-    checkers_basenames = [os.path.basename(checker[0]) for checker in checkers]
-    checkers.extend([checker for checker in CHECKERS
-        if os.path.basename(checker[0]) not in checkers_basenames])
+    if 'CHECKERS' in globals():
+        checkers_basenames = [
+            os.path.basename(checker[0]) for checker in checkers]
+        checkers.extend([checker for checker in CHECKERS
+            if os.path.basename(checker[0]) not in checkers_basenames])
 
     messages = []
     for checker, args in checkers:
